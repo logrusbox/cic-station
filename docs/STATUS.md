@@ -9,13 +9,17 @@
 - `logrusbox/vincent` is the canonical Vincent worker repository.
 - `logrusbox/fleet` owns the Fleet roadmap, cross-component integration issues, Fleet status, and Fleet governance.
 - A third application repository is not planned. Private fleet information will be stored as deployed application data, with secrets and production configuration outside Git.
-- CIC Station is currently `0.1.0` build `0002`.
+- CIC Station is currently `0.1.0` build `0003`.
 - A Fleet-owned work-domain reducer and seven executable contract tests are implemented. No service, authenticated API, database migration or web UI is implemented yet. Paperclip remains the accepted application foundation; the exact inspected source and adapter mapping are documented in [WORK_MODEL.md](WORK_MODEL.md).
 - `main` is the only permanent branch; automatic deletion of merged temporary branches is enabled.
 - No GitHub repository ruleset is currently configured. The documented PR + CI, no-force-push, branch-protection, linear-history, and squash-merge policy remains to be enforced through GitHub settings.
 - GitHub Projects v2 is intentionally not part of the authoritative workflow. Repository issues remain concrete work authority, repository milestones own component release targets, and `logrusbox/fleet` owns Fleet-level M0-M8 outcomes.
 
 Current `main` (`6d2a228a9d2ddee03e90ab239fbcc2ebac0534b3`) passed [validation run 33423502131](https://github.com/logrusbox/cic-station/actions/runs/33423502131). Open issues #25, #18, #12, #6, and #4 remain unresolved; no application implementation or open PR was present during the September 25 rescan.
+
+## Foundation preparation
+
+The exact Paperclip source pin, license notice and reproducible preparation script are present; see [FOUNDATION.md](FOUNDATION.md). Source materialization and three preservation/hash tests pass. Dependency/build validation is still in progress; no operational application has been started.
 
 ## Current Fleet state
 
