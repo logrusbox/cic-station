@@ -6,6 +6,12 @@ CIC Station is the managed-fleet control plane. Vincent is the worker platform. 
 
 A fresh Vincent worker does not require CIC Station. CIC Station authority begins after explicit enrollment.
 
+## Application foundation
+
+Fleet ADR-0002 selects an upstream-friendly Paperclip fork as the initial application foundation. Fleet ADR-0003 requires replaceable domain contracts and a modular monolith by default. CIC Station integrates Fleet work/attempt/lease/result authority through explicit adapters; it must not silently replace the accepted foundation with a separate greenfield service.
+
+See [Work and execution domain](WORK_MODEL.md) and ADR-0021 for the canonical object relationships, reducer tests, transaction requirements and exact upstream mapping.
+
 ## Logical layers
 
 1. **Web UI** — responsive authenticated operator interface for enrollment, fleet status, worker details, assignments, approvals, failures, reports, and policy.
@@ -20,7 +26,7 @@ A fresh Vincent worker does not require CIC Station. CIC Station authority begin
 | Data | Canonical authority |
 |---|---|
 | Project source, product requirements, repository instructions, commits | Project Git repository |
-| CIC Station product requirements/ADRs/program roadmap | CIC Station Git repository |
+| CIC Station product requirements/ADRs (Fleet owns program roadmap) | CIC Station Git repository |
 | Operator identities, roles/permissions, and session state | CIC Station service/database once implemented |
 | Worker identity/enrollment/authorization state and public/verifier material | CIC Station service/database once implemented |
 | Worker private installation credential | Protected Vincent-local storage; never CIC Station or Git |
@@ -30,7 +36,7 @@ A fresh Vincent worker does not require CIC Station. CIC Station authority begin
 | Installer provenance and current Vincent version | Reported by Vincent; recorded by CIC Station |
 | Raw credentials | Protected secret store/local protected worker storage, never Git |
 
-Early Git-backed coordination is permitted while the model is being proven, but the data model must not assume Git remains the high-frequency operational database.
+Git-backed fixtures and durable project artifacts are permitted. ADR-0018 requires persistent operational service/database authority before multi-worker lease coordination; Git is not live lease authority.
 
 ## Operator identity and access control
 

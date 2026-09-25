@@ -9,8 +9,8 @@
 - `logrusbox/vincent` is the canonical Vincent worker repository.
 - `logrusbox/fleet` owns the Fleet roadmap, cross-component integration issues, Fleet status, and Fleet governance.
 - A third application repository is not planned. Private fleet information will be stored as deployed application data, with secrets and production configuration outside Git.
-- CIC Station is currently `0.1.0` build `0001`.
-- No CIC Station service, API, database schema, or web UI implementation has started yet; the repository currently contains the canonical CIC Station component/governance/security/protocol model and validation scaffolding.
+- CIC Station is currently `0.1.0` build `0002`.
+- A Fleet-owned work-domain reducer and seven executable contract tests are implemented. No service, authenticated API, database migration or web UI is implemented yet. Paperclip remains the accepted application foundation; the exact inspected source and adapter mapping are documented in [WORK_MODEL.md](WORK_MODEL.md).
 - `main` is the only permanent branch; automatic deletion of merged temporary branches is enabled.
 - No GitHub repository ruleset is currently configured. The documented PR + CI, no-force-push, branch-protection, linear-history, and squash-merge policy remains to be enforced through GitHub settings.
 - GitHub Projects v2 is intentionally not part of the authoritative workflow. Repository issues remain concrete work authority, repository milestones own component release targets, and `logrusbox/fleet` owns Fleet-level M0-M8 outcomes.
@@ -38,7 +38,7 @@ Current `main` (`6d2a228a9d2ddee03e90ab239fbcc2ebac0534b3`) passed [validation r
 - The large workstation has not yet completed the persistent bounded-work worker proof required before the first managed-worker integration proof.
 - CIC Station implementation must keep operational data, worker private credentials, secrets, and private production configuration out of Git.
 - Vincent client requirements/implementation must be aligned with the approved CIC Station worker-trust and protocol contract before the first managed-worker proof.
-- Issue #25 must be resolved before CIC Station 0.1.0 database/schema design hardens the work/attempt/lease/result relationships.
+- ADR-0021 resolves the semantic gate in #25; persistence must enforce its relationships transactionally.
 - Lease clock authority/skew/restart semantics remain to be defined before the 0.3.0 multi-worker lease implementation.
 - GitHub repository rulesets/merge settings and native release milestones require GitHub UI configuration because the connected automation cannot currently create them.
 
@@ -46,6 +46,6 @@ Current `main` (`6d2a228a9d2ddee03e90ab239fbcc2ebac0534b3`) passed [validation r
 
 1. Complete Vincent physical installer/runtime acceptance and bring the large workstation fully online as a bounded-work Vincent worker.
 2. Align Vincent with the approved asymmetric worker identity, proof-of-possession, server-trust, protocol-versioning, retry/idempotency, managed authorization, and task/credential isolation boundaries.
-3. Resolve CIC Station #25 and define the 0.1.0 application/domain model before schema implementation hardens it.
+3. Integrate the tested work domain with the pinned Paperclip foundation and transactional persistence.
 4. Begin CIC Station 0.1.0 with the minimum persistent service/API/database foundation for operators, workers/public identities, enrollment/authorization, protocol compatibility, work items, attempts, results, and audit state.
 5. Prove the first managed worker through the corresponding cross-component Fleet integration issue before implementing multi-worker lease coordination in 0.3.0.

@@ -30,3 +30,5 @@ The Fleet roadmap, Fleet status, cross-component integration issues, and Fleet-l
 - Completed migration/project-reset material belongs in Git history, not the active documentation tree.
 - Large raw logs, screenshots, generated builds, and CI bundles belong in Actions/release artifacts rather than ordinary Git history.
 - Documentation and source change through the same pull-request/CI workflow.
+
+- [Work and execution domain](WORK_MODEL.md) — canonical work/attempt/lease/result semantics and upstream mapping.
