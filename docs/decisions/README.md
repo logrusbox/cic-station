@@ -40,3 +40,5 @@ ADR numbers are assigned only on the integration branch/PR and are never reused 
 - `ADR-0020-public-development-visibility.md`
 
 Do not maintain a second full-text decision register.
+
+- `ADR-0021-separate-work-selection-attempt-lease-result.md`
