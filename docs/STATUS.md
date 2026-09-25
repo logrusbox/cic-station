@@ -19,7 +19,7 @@ Current `main` (`6d2a228a9d2ddee03e90ab239fbcc2ebac0534b3`) passed [validation r
 
 ## Foundation preparation
 
-The exact Paperclip source pin, license notice and reproducible preparation script are present; see [FOUNDATION.md](FOUNDATION.md). Source materialization and three preservation/hash tests pass. Dependency/build validation is still in progress; no operational application has been started.
+The exact Paperclip source pin, license notice and reproducible preparation script are present; see [FOUNDATION.md](FOUNDATION.md). Source materialization and three preservation/hash tests pass. Pinned dependency installation, database migration static checks and database TypeScript compilation pass. Local PostgreSQL startup is blocked by the root-only environment; a GitHub workflow now exercises real disposable-database migrations. No deployed application has been started.
 
 ## Current Fleet state
 

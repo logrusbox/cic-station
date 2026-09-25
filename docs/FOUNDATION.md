@@ -22,10 +22,29 @@ The inspected upstream package declares Node >=24.11.0 and pnpm 9.15.4. Use that
 
 ## Next integration work
 
-1. Finish the pinned dependency/build checks and record actual results.
+1. Run the automated real PostgreSQL foundation proof and record its outcome.
 2. Add the Fleet contract as a modular extension to upstream issues and heartbeat runs using the mapping in [WORK_MODEL.md](WORK_MODEL.md).
 3. Add transactional persistence with tenant-scoped identities, revision comparisons, immutable attempts/results and audit.
 4. Implement the authenticated Vincent adapter and ChatGPT-facing Fleet MCP operations.
 5. Prove ChatGPT → Fleet MCP → Paperclip-derived CIC task → Vincent → Codex → durable CIC result on the authorized worker.
 
 No deployed service, operational database, UI, approved provider credentials or successful end-to-end execution is claimed. Upstream dependency licensing and formal release audits remain separate from the root MIT source notice.
+
+
+## September 25 validation evidence
+
+The exact pnpm 9.15.4 frozen dependency installation completed with lifecycle scripts
+disabled. Database migration numbering/safety checks and TypeScript compilation
+passed through `node --import tsx` and `tsc --noEmit`. The usual tsx CLI IPC launcher
+was restricted in the execution environment, so the supported loader was used.
+The migration safety check reports 20 historical findings covered by upstream's
+baseline, with one stale baseline identifier; this is not a clean security audit.
+
+Local real PostgreSQL startup is blocked: the environment runs as root and denies
+switching to a non-root account (`runuser: cannot set groups`). PostgreSQL refuses
+root execution. The `Paperclip foundation` GitHub workflow runs on a normal non-root
+runner, installs the locked source, checks the database module, applies actual
+upstream migrations to a disposable database, and verifies the issue/run columns
+used by Fleet's mapping. It never connects to a deployed fleet or uses credentials.
+Only a green run supplies database-foundation evidence; it does not prove Vincent,
+Codex, enrollment, MCP or the complete application.
