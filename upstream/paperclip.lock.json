@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/paperclipai/paperclip.git",
+  "commit": "bd203093235b28631760a76b602b35028322e06f",
+  "node": ">=24.11.0",
+  "package_manager": "pnpm@9.15.4",
+  "license": "MIT",
+  "files": {
+    "LICENSE": "7f8a27f0979bded50e240caa8c8c29f3088ddf87032cb83e5a9732bff91d18b4",
+    "pnpm-lock.yaml": "e0c928a494f90ddad3c00791e83f09315ee8c82df2a0418a809dcf93649a8ab3",
+    "package.json": "b53c26fa7a42f0e140e8c8d7793f09ee38072ffc9d6e6e16557a11c5940de04a"
+  }
+}

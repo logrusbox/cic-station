@@ -32,3 +32,5 @@ The Fleet roadmap, Fleet status, cross-component integration issues, and Fleet-l
 - Documentation and source change through the same pull-request/CI workflow.
 
 - [Work and execution domain](WORK_MODEL.md) — canonical work/attempt/lease/result semantics and upstream mapping.
+
+- [Paperclip foundation](FOUNDATION.md) — exact source pin and reproducible preparation.
