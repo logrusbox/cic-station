@@ -1,0 +1,59 @@
+name: Paperclip foundation
+on:
+  push:
+    paths:
+      - 'upstream/**'
+      - 'scripts/prepare_foundation.py'
+      - '.github/workflows/foundation.yml'
+  pull_request:
+    paths:
+      - 'upstream/**'
+      - 'scripts/prepare_foundation.py'
+      - '.github/workflows/foundation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  database-foundation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Materialize exact upstream source
+        run: python3 scripts/prepare_foundation.py "$RUNNER_TEMP/paperclip"
+      - name: Install pinned dependencies without lifecycle scripts
+        working-directory: ${{ runner.temp }}/paperclip
+        run: npx --yes pnpm@9.15.4 install --frozen-lockfile --ignore-scripts
+      - name: Check migrations and compile database module
+        working-directory: ${{ runner.temp }}/paperclip/packages/db
+        run: |
+          node --import tsx src/check-migration-numbering.ts
+          node --import tsx src/check-migration-safety.ts
+          node_modules/.bin/tsc --noEmit
+      - name: Prove real database migration and Fleet mapping
+        working-directory: ${{ runner.temp }}/paperclip/packages/db
+        run: |
+          node --import tsx --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import postgres from 'postgres';
+          import {startEmbeddedPostgresTestDatabase} from './src/test-embedded-postgres.ts';
+          const db = await startEmbeddedPostgresTestDatabase('fleet-foundation-');
+          const sql = postgres(db.connectionString, {max: 1});
+          try {
+            for (const [table, required] of Object.entries({issues:['id','company_id','project_id','status_version'], heartbeat_runs:['id','company_id','agent_id','result_json','controller_lease_expires_at']})) {
+              const rows = await sql`select column_name from information_schema.columns where table_schema='public' and table_name=${table}`;
+              const columns = new Set(rows.map(r => r.column_name));
+              for (const name of required) assert.ok(columns.has(name), `${table}.${name} missing`);
+            }
+            console.log('PAPERCLIP_DATABASE_FOUNDATION=PASS');
+          } finally {
+            await sql.end();
+            await db.cleanup();
+          }
+          JS
